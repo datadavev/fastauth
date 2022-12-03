@@ -1,0 +1,5 @@
+fastapi
+httpx
+itsdangerous
+authlib
+jinja2
