@@ -41,12 +41,7 @@ oauth.register(
 @app.get("/", response_class=fastapi.responses.HTMLResponse)
 async def homepage(request: fastapi.requests.Request):
     user = request.session.get("user", None)
-    #if user:
-    #    data = json.dumps(user)
-    #    html = f"<pre>{data}</pre>" '<a href="/logout">logout</a>'
-    #    return fastapi.responses.HTMLResponse(html)
-    return templates.TemplateResponse("index.html", {"request": request, "user":user})
-    #return fastapi.responses.HTMLResponse('<a href="/login">login</a>')
+    return templates.TemplateResponse("index.html", {"request": request, "user": user})
 
 
 @app.route("/login")
