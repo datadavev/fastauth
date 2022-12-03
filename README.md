@@ -22,3 +22,4 @@ To deploy:
    6. `deta update -e .env`
    7. Visit the url provided by deta
 
+There's currently a demo on deta at: https://fc845o.deta.dev
