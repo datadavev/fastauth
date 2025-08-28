@@ -11,6 +11,7 @@ import fastapi.requests
 import fastapi.responses
 import fastapi.staticfiles
 import fastapi.templating
+import github
 import starlette.config
 import starlette.middleware.sessions
 
@@ -37,6 +38,7 @@ oauth.register(
     client_kwargs={"scope": "openid email profile"},
 )
 
+ALLOWED_USERS = ["0000-0002-6513-4996", ]
 
 @app.get("/", response_class=fastapi.responses.HTMLResponse)
 async def homepage(request: fastapi.requests.Request):
@@ -44,15 +46,15 @@ async def homepage(request: fastapi.requests.Request):
     return templates.TemplateResponse("index.html", {"request": request, "user": user})
 
 
-@app.route("/login")
+@app.get("/login")
 async def login(request: fastapi.requests.Request):
     # absolute url for callback
     # we will define it below
     redirect_uri = request.url_for("auth")
-    return await oauth.ORCID.authorize_redirect(request, redirect_uri)
+    return await oauth.ORCID.authorize_redirect(request, str(redirect_uri))
 
 
-@app.route("/auth")
+@app.get("/auth")
 async def auth(request: fastapi.requests.Request):
     try:
         token = await oauth.ORCID.authorize_access_token(request)
@@ -73,6 +75,18 @@ async def auth(request: fastapi.requests.Request):
 async def logout(request: fastapi.requests.Request):
     request.session.pop("user", None)
     return fastapi.responses.RedirectResponse(url="/")
+
+@app.get("/read")
+async def read_document(request: fastapi.requests.Request):
+    user = request.session.get("user", None)
+    the_document = None
+    if user is not None:
+        if user.get("sub", None) in ALLOWED_USERS:
+            g = github.Github(config("GH_TOKEN", default=None))
+            repo = g.get_repo(config("GH_REPO", default="datadavev/minibox"))
+            the_document = repo.get_contents("README.md")
+            the_document.body = the_document.decoded_content.decode()
+    return templates.TemplateResponse("edit.html", {"request": request, "user": user, "document": the_document})
 
 
 if __name__ == "__main__":
