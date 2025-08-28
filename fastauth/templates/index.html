@@ -1,43 +1,46 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ORCID Auth</title>
-<script>
-function getUserInfo() {
-    const orcid="{{user.sub}}"
-    const url = `https://pub.orcid.org/v3.0/${orcid}/person`;
-    fetch(url, {
-        headers:{
-            "Accept":"application/json"
-        }
-    })
-    .then((response) => response.json())
-    .then((data) => {
-        console.log(data);
-        document.getElementById("personinfo").innerText = JSON.stringify(data,null,2);
-    });
-}
-</script>
-</head>
-<body>
-{% if user -%}
-<div>
-    <p><a href="/logout">Logout</a></p>
-    <p>User auth info:</p>
-    <pre>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ORCID Auth</title>
+        <script>
+            function getUserInfo() {
+                const orcid = "{{user.sub}}";
+                const url = `https://pub.orcid.org/v3.0/${orcid}/person`;
+                fetch(url, {
+                    headers: {
+                        Accept: "application/json",
+                    },
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log(data);
+                        document.getElementById("personinfo").innerText =
+                            JSON.stringify(data, null, 2);
+                    });
+            }
+        </script>
+    </head>
+    <body>
+        {% if user -%}
+        <div>
+            <p><a href="/logout">Logout</a></p>
+            <p>User auth info:</p>
+            <pre>
 {{ user|tojson(2) }}
-    </pre>
-<p>Public user info for ORCID <code>{{user.sub}}</code>:</p>
-    <pre id="personinfo">
-    </pre>
-    <script>getUserInfo();</script>
-</div>
-{% else %}
-<div>
-    <a href="/login">login</a>
-</div>
-{% endif %}
-</body>
+    </pre
+            >
+            <p>Public user info for ORCID <code>{{user.sub}}</code>:</p>
+            <pre id="personinfo"></pre>
+            <script>
+                getUserInfo();
+            </script>
+        </div>
+        {% else %}
+        <div>
+            <a href="/login">Login using ORCID</a>
+        </div>
+        {% endif %}
+    </body>
 </html>
