@@ -1,9 +1,9 @@
 repos:
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.6.17
+    rev: 0.8.13
     hooks:
       - id: uv-export
         name: main dependencies
-        args: [--no-dev, --output-file, fastauth/requirements.txt]
+        args: [--no-dev, --no-hashes, --output-file, fastauth/requirements.txt]
 
       - id: uv-lock
