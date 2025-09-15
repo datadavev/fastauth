@@ -53,7 +53,7 @@ packaging==25.0
     # via pytest
 pluggy==1.6.0
     # via pytest
-pycparser==2.22 ; platform_python_implementation != 'PyPy'
+pycparser==2.23 ; platform_python_implementation != 'PyPy'
     # via cffi
 pydantic==2.11.9
     # via fastapi
