@@ -27,7 +27,7 @@ exceptiongroup==1.3.0 ; python_full_version < '3.11'
     # via
     #   anyio
     #   pytest
-fastapi==0.116.1
+fastapi==0.117.1
     # via fastauth
 h11==0.16.0
     # via
