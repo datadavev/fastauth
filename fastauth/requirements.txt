@@ -7,7 +7,7 @@ anyio==4.10.0
     # via
     #   httpx
     #   starlette
-authlib==1.6.3
+authlib==1.6.5
     # via fastauth
 certifi==2025.8.3
     # via
