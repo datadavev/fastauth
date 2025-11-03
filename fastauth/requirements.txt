@@ -55,7 +55,7 @@ pluggy==1.6.0
     # via pytest
 pycparser==2.23 ; platform_python_implementation != 'PyPy'
     # via cffi
-pydantic==2.12.0
+pydantic==2.12.3
     # via fastapi
 pydantic-core==2.39.0
     # via pydantic
